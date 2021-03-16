@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单验证</title>
+    <style type="text/css" rel="stylesheet">
+        body{
+            width: 1000px;
+        }
+        #form{
+            position: absolute;
+            left: 30%;
+            top: 20%;
+            width: 600px;
+            height: 500px;
+
+        }
+
+        #form span{
+            font-size: 12px;
+            color: red;
+        }
+
+    </style>
+    <script type="text/javascript" >
+        window.onload=function () {
+            var username=document.getElementById("username");
+            var password=document.getElementById("password");
+            var agapassword=document.getElementById("agapassword");
+            var email=document.getElementById("email");
+
+            var usernamespan=document.getElementById("usernamespan");
+            var agapasswordspan=document.getElementById("agapasswordspan");
+            var emailspan=document.getElementById("emailspan");
+
+
+            username.onfocus=function (){
+             if (usernamespan.innerText!=""){
+                 username.value="";
+                 usernamespan.innerText="";
+                }
+            }
+            agapassword.onfocus=function (){
+                if (agapasswordspan.innerText!=""){
+                    agapassword.value="";
+                    agapasswordspan.innerText="";
+                }
+            }
+            email.onfocus=function (){
+                if (emailspan.innerText!="") {
+                    email.value="";
+                    emailspan.innerText="";
+                }
+            }
+            username.onblur= function () {
+                var usernamevalue=username.value;
+                usernamevalue=usernamevalue.trim();
+                var format2=/^[A-Za-z0-9]+$/;
+                if (usernamevalue==""){
+                    usernamespan.innerText="用户名不能为空";
+                }else if (usernamevalue.length<6||usernamevalue.length>14){
+                    usernamespan.innerText="用户名必须在6-14位之间";
+                }else if (!(format2.test(usernamevalue))){
+                    usernamespan.innerText="用户名只能有数字和字母组成，不能含有其它符号";
+                }
+            }
+
+            agapassword.onblur=function () {
+                if (password.value!=agapassword.value){
+                    agapasswordspan.innerText="密码和确认密码不一致";
+                }
+            }
+            email.onblur= function () {
+                var emailvalue=email.value;
+                emailvalue=emailvalue.trim();
+                if(!(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(emailvalue))){
+                    emailspan.innerText="邮箱地址不合法"
+                }
+            }
+            document.getElementById("button").onclick=function () {
+                username.focus();
+                username.blur();
+                agapassword.focus();
+                agapassword.blur();
+                email.focus();
+                email.blur();
+                if (usernamespan.innerText==""&& agapasswordspan.innerText==""&&emailspan.innerText==""){
+                    document.getElementById("form").submit();
+                }else{
+                    return false;
+                }
+            }
+        }
+    </script>
+</head>
+<!--
+（1）用户名不能为空
+（2）用户名必须在6-14位之间
+（3）用户名只能有数字和字母组成，不能含有其它符号（正则表达式）
+（4）密码和确认密码一致，邮箱地址合法。
+（5）统一失去焦点验证
+（6）错误提示信息统一在span标签中提示，并且要求字体12号，红色。
+（7）文本框再次获得焦点后，清空错误提示信息，如果文本框中数据不合法要求清空文本框的value
+（8）最终表单中所有项均合法方可提交
+-->
+<body>
+<form action="http://localhost:8080/html/homepage.html" method="get" id="form">
+    <table >
+        <tr>
+            <td><label>用户名</label></td>
+            <td><input type="text" name="username" id="username"/></td>
+            <td><span id="usernamespan"></span></td>
+        </tr>
+        <tr>
+            <td><label>密码</label></td>
+            <td><input type="password" name="password" id="password"/></td>
+        </tr>
+        <tr>
+            <td><label>确认密码</label></td>
+            <td><input type="password" id="agapassword"/></td>
+            <td><span id="agapasswordspan"></span></td>
+        </tr>
+        <tr>
+            <td><label>邮箱</label></td>
+            <td><input type="text" name="email" id="email"/></td>
+            <td><span id="emailspan"></span></td>
+        </tr>
+        <tr>
+            <td><input type="button" id="button" value="提交"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
