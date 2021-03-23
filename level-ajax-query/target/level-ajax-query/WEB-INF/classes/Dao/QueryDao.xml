@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dao.QueryDao">
+    <select id="queryProvinceList" resultType="entity.Province">
+    select id,name,jiancheng,shenghui from province order by id
+    </select>
+    <select id="queryCityList" resultType="entity.City">
+    select id,name from city where provinceid=#{id} order by id
+    </select>
+</mapper>
